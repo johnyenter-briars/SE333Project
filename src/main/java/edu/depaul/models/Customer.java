@@ -32,6 +32,8 @@ public class Customer implements DVDOwner{
         return _currentlyRented;
     }
 
+    public void addToCurrentlyRented(Video video){ _currentlyRented.add(video); }
+
     public String toString(){
         return _firstName + " " + _lastName + " " + _customerId;
     }

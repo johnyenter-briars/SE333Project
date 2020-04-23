@@ -8,9 +8,9 @@ public class TestDennysDVDs {
 
     @Test
     void testDenny(){
-        DennysDVDs dennysDVDs = new DennysDVDs();
-
-        assertEquals(5, dennysDVDs.getFive());
+//        DennysDVDs dennysDVDs = new DennysDVDs();
+//
+//        assertEquals(5, dennysDVDs.getFive());
     }
 
 }

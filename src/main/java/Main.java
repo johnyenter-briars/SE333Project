@@ -1,3 +1,5 @@
+import edu.depaul.dennysdvds.DennysDVDs;
+import edu.depaul.models.Customer;
 import edu.depaul.models.Warehouse;
 
 import java.io.IOException;
@@ -5,11 +7,14 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        DennysDVDs dennysDVDs = new DennysDVDs(new Warehouse());
 
-        System.out.println("Hello there!!");
+        dennysDVDs.printDVDs();
 
-        Warehouse warehouse = new Warehouse();
+        Customer customer1 = new Customer();
 
-        warehouse.loadVideos();
+
+
+
     }
 }

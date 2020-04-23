@@ -6,8 +6,12 @@ public class VideoExchange {
 
     private DVDOwner _comingFrom;
 
-    public VideoExchange(){
+    private Video _video;
 
+    public VideoExchange(DVDOwner goingTo, DVDOwner comingFrom, Video video){
+        _goingTo = goingTo;
+        _comingFrom = comingFrom;
+        _video = video;
     }
 
     public DVDOwner get_goingTo() {

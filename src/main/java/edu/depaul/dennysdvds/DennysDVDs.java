@@ -1,40 +1,40 @@
 package edu.depaul.dennysdvds;
 
-//import com.opencsv.*;
-//import com.opencsv.exceptions.CsvException;
+import edu.depaul.models.*;
 
 import java.io.*;
+import java.util.LinkedList;
 import java.util.List;
 
 public class DennysDVDs {
 
-    public static void main(String[] args) throws IOException {
+    private Warehouse _warehouse;
 
-        System.out.println("Hello denny! Part 2! Checking here");
+    private List<VideoExchange> _ledger;
 
-        System.out.println(System.getProperty("user.dir"));
+    public DennysDVDs(Warehouse warehouse){
+        if(warehouse == null)
+            throw new IllegalArgumentException("Warehouse can not be null");
 
-        File file = new File("files/Users.csv");
-        FileReader fileReader = new FileReader(file);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String line;
-        while((line = bufferedReader.readLine()) != null){
-            System.out.println(line);
-        }
-
-//        CSVReader reader = new CSVReader();
-//
-//        List<String[]> lines = reader.readAll();
-//
-//        for(String[] ele : lines){
-//            System.out.println(ele);
-//        }
-
-
-
+        _warehouse = warehouse;
+        _ledger = new LinkedList<>();
     }
 
-    public int getFive(){
-        return 5;
+    public void printDVDs(){
+        _warehouse.forEach(System.out::println);
     }
+
+    public Response checkoutVideo(Customer customer, String name){
+        Video targetVideo = _warehouse.getVideoByNameAprox(name);
+
+        VideoExchange videoExchange = new VideoExchange(customer, _warehouse, targetVideo);
+
+        _ledger.add(videoExchange);
+
+        _warehouse.remove(targetVideo);
+
+        return null;
+    }
+
+
 }

@@ -27,6 +27,11 @@ public class Video {
         this._videoId = _videoId;
     }
 
+    public String get_movieName() {
+        return _movieName;
+    }
+
+
     public String toString(){
         return String.format("%s %s %s", _movieName, _yearReleased, _videoId);
     }
