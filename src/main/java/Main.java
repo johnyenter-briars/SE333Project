@@ -9,12 +9,15 @@ public class Main {
     public static void main(String[] args) throws IOException {
         DennysDVDs dennysDVDs = new DennysDVDs(new Warehouse());
 
-        dennysDVDs.printDVDs();
-
         Customer customer1 = new Customer();
 
+        dennysDVDs.checkoutVideo(customer1, "Star Wars");
 
+        customer1.printCurrentlyOwnedVideos();
 
+        System.out.println("-------");
+
+        dennysDVDs.printDVDs();
 
     }
 }

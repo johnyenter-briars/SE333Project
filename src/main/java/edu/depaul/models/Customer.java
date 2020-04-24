@@ -38,4 +38,8 @@ public class Customer implements DVDOwner{
         return _firstName + " " + _lastName + " " + _customerId;
     }
 
+    @Override
+    public void printCurrentlyOwnedVideos() {
+        _currentlyRented.forEach(System.out::println);
+    }
 }
