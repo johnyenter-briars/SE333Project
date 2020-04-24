@@ -21,7 +21,7 @@ public class DennysDVDs {
     }
 
     public void printDVDs(){
-        _warehouse.forEach(System.out::println);
+        _warehouse.printCurrentlyOwnedVideos();
     }
 
     public Response checkoutVideo(Customer customer, String name){
@@ -33,7 +33,9 @@ public class DennysDVDs {
 
         _warehouse.remove(targetVideo);
 
-        return null;
+        customer.addToCurrentlyRented(targetVideo);
+
+        return new Response(ResponseStatus.OK);
     }
 
 

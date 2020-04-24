@@ -51,29 +51,35 @@ public class Warehouse implements DVDOwner, Iterable<Video>, Collection<Video>{
 
     @Override
     public int size() {
-        return 0;
+        return _inventory.size();
     }
+
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return _inventory.isEmpty();
     }
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        if(!(o instanceof Video))
+            throw new IllegalArgumentException("You can only search for Videos on the Warehouse object");
+        return _inventory.contains(o);
     }
 
+    // TODO: 4/24/20
     @Override
     public Iterator<Video> iterator() {
         return _inventory.iterator();
     }
 
+    // TODO: 4/24/20
     @Override
     public Object[] toArray() {
         return new Object[0];
     }
 
+    // TODO: 4/24/20
     @Override
     public <T> T[] toArray(T[] ts) {
         return null;
@@ -89,31 +95,37 @@ public class Warehouse implements DVDOwner, Iterable<Video>, Collection<Video>{
 
     @Override
     public boolean remove(Object o) {
-        if(! (o instanceof Video))
-            throw new IllegalArgumentException()
-        return false;
+        if(!(o instanceof Video))
+            throw new IllegalArgumentException("Must remove a Video object from the warehouse!");
+        _inventory.remove(o);
+        return true;
     }
 
+    // TODO: 4/24/20
     @Override
     public boolean containsAll(Collection<?> collection) {
         return false;
     }
 
+    // TODO: 4/24/20
     @Override
     public boolean addAll(Collection<? extends Video> collection) {
         return false;
     }
 
+    // TODO: 4/24/20
     @Override
     public boolean removeAll(Collection<?> collection) {
         return false;
     }
 
+    // TODO: 4/24/20
     @Override
     public boolean retainAll(Collection<?> collection) {
         return false;
     }
 
+    // TODO: 4/24/20
     @Override
     public void clear() {
 
@@ -127,5 +139,10 @@ public class Warehouse implements DVDOwner, Iterable<Video>, Collection<Video>{
     @Override
     public Spliterator<Video> spliterator() {
         return _inventory.spliterator();
+    }
+
+    @Override
+    public void printCurrentlyOwnedVideos() {
+        _inventory.forEach(System.out::println);
     }
 }
