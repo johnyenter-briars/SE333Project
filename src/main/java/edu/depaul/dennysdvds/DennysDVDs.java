@@ -38,5 +38,18 @@ public class DennysDVDs {
         return new Response(ResponseStatus.OK);
     }
 
+    public Response checkinVideo(Customer customer, Video video){
+
+        VideoExchange videoExchange = new VideoExchange(customer, _warehouse, video);
+
+        _ledger.add(videoExchange);
+
+        customer.removeFromCurrentlyRented(video);
+
+        _warehouse.add(video);
+
+        return new Response(ResponseStatus.OK);
+    }
+
 
 }
