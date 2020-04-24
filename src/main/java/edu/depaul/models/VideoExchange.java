@@ -9,6 +9,10 @@ public class VideoExchange {
     private Video _video;
 
     public VideoExchange(DVDOwner goingTo, DVDOwner comingFrom, Video video){
+        if(goingTo.getClass() == comingFrom.getClass())
+            throw new IllegalArgumentException("The same type of object cant be passing a video object to itself");
+
+
         _goingTo = goingTo;
         _comingFrom = comingFrom;
         _video = video;
