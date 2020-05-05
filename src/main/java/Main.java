@@ -19,7 +19,7 @@ public class Main {
 
         dennysDVDs.printDVDs();
 
-        dennysDVDs.checkinVideo(customer1, customer1.get_currentlyRented().get(0));
+        dennysDVDs.checkinVideo(customer1, customer1.getCurrentlyRented().get(0));
 
         System.out.println("---After check in----");
 

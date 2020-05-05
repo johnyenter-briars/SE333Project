@@ -51,5 +51,9 @@ public class DennysDVDs {
         return new Response(ResponseStatus.OK);
     }
 
+    public boolean currentlyHasVideo(String videoName){
+        return _warehouse.stream().anyMatch(v -> v.getMovieName().contains(videoName));
+    }
+
 
 }
