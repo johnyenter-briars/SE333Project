@@ -46,7 +46,7 @@ public class Warehouse implements DVDOwner, Iterable<Video>, Collection<Video>{
     }
 
     public Video getVideoByNameAprox(String name){
-        return _inventory.stream().filter(v -> v.get_movieName().contains(name)).findAny().orElse(null);
+        return _inventory.stream().filter(v -> v.getMovieName().contains(name)).findAny().orElse(null);
     }
 
     @Override

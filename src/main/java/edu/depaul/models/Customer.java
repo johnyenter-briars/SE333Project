@@ -28,7 +28,7 @@ public class Customer implements DVDOwner{
         this._customerId = _customerId;
     }
 
-    public List<Video> get_currentlyRented() {
+    public List<Video> getCurrentlyRented() {
         return _currentlyRented;
     }
 
@@ -38,6 +38,10 @@ public class Customer implements DVDOwner{
 
     public String toString(){
         return _firstName + " " + _lastName + " " + _customerId;
+    }
+
+    public boolean currentlyHasVideo(String videoName){
+        return getCurrentlyRented().stream().anyMatch(v -> v.getMovieName().contains(videoName));
     }
 
     @Override

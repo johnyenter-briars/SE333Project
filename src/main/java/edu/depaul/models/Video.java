@@ -27,7 +27,7 @@ public class Video {
         this._videoId = _videoId;
     }
 
-    public String get_movieName() {
+    public String getMovieName() {
         return _movieName;
     }
 
