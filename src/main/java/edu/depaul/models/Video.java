@@ -19,6 +19,10 @@ public class Video {
 
     }
 
+    public Video(String videoName){
+        _movieName = videoName;
+    }
+
     public UUID getVideoId() {
         return _videoId;
     }

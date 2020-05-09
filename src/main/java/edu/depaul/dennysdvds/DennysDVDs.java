@@ -55,5 +55,9 @@ public class DennysDVDs {
         return _warehouse.stream().anyMatch(v -> v.getMovieName().contains(videoName));
     }
 
+    public List<VideoExchange> getLedger(){
+        return _ledger;
+    }
+
 
 }
