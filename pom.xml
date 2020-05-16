@@ -69,9 +69,6 @@
                 <configuration>
                     <finalName>SE333-${user.id}-dennysdvds</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
-                    <descriptorRefs>
-                        <descriptorRef>src</descriptorRef>
-                    </descriptorRefs>
                     <descriptors>
                         <descriptor>src/assembly/assembly.xml</descriptor>
                     </descriptors>
