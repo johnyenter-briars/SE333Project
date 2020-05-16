@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
-public class TestDennysDVDs {
+public class DennysDVDsTest {
 
     @Test
     void Test_Checkout_Customer() throws IOException {
