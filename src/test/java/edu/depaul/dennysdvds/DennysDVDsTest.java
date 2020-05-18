@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.stubbing.OngoingStubbing;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -71,6 +72,95 @@ public class DennysDVDsTest {
         //Assert
         assertTrue(dennysDVDs.currentlyHasVideo("Star Wars"));
         assertEquals(2, dennysDVDs.getLedger().size());
+    }
+
+    @Test
+    void Test_ErrorHandling_DennysDVDs(){
+        //Arrange
+        //Act
+        //Assert
+        assertThrows(IllegalArgumentException.class, () ->{
+            DennysDVDs dennysDVDs = new DennysDVDs(null);
+        });
+    }
+
+    @Test
+    void Test_ErrorHandling_RemoveVideo_Warehouse() throws IOException {
+        //Arrange
+        Warehouse warehouse = new Warehouse();
+
+        //Act
+        //Assert
+        assertThrows(IllegalArgumentException.class, ()->{
+            warehouse.remove("Not a Video Object!");
+        });
+    }
+
+    @Test
+    void Test_ErrorHandling_AddVideo_Warehouse() throws IOException {
+        //Arrange
+        Warehouse warehouse = new Warehouse();
+
+        //Act
+        //Assert
+        assertThrows(IllegalArgumentException.class, ()->{
+            warehouse.add(null);
+        });
+    }
+
+    @Test
+    void Test_ErrorHandling_ContainsVideo_Warehouse() throws IOException {
+        //Arrange
+        Warehouse warehouse = new Warehouse();
+
+        //Act
+        //Assert
+        assertThrows(IllegalArgumentException.class, ()->{
+            warehouse.contains("Not a video object!");
+        });
+    }
+
+    @Test
+    void Test_ContainsVideo_Warehouse() throws IOException {
+        //Arrange
+        Warehouse warehouse = new Warehouse();
+
+        //Act
+        //Assert
+        for (Video vid : warehouse) {
+            assertTrue(warehouse.contains(vid));
+        }
+    }
+
+    @Test
+    void Test_GetResponseStatus(){
+        //Arrange
+        Response response = new Response(ResponseStatus.OK);
+
+        //Act
+        //Assert
+        assertEquals(ResponseStatus.OK, response.getStatus());
+    }
+
+    @Test
+    void Test_VideoString(){
+        //Arrange
+        UUID id = UUID.randomUUID();
+        Video video = new Video("Star Wars", 1977, id);
+        //Act
+        //Assert
+        assertEquals(String.format("Star Wars 1977 %s", id.toString()), video.toString());
+    }
+
+    @Test
+    void Test_VideoExchange_TypeMismatch(){
+        //Arrange
+        Video video = new Video("Star Wars", 1977, UUID.randomUUID());
+        //Act
+        //Assert
+        assertThrows(IllegalArgumentException.class, () ->{
+            VideoExchange videoExchange = new VideoExchange(new Customer(), new Customer(), video);
+        });
     }
 
 }

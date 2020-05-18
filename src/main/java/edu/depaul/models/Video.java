@@ -23,6 +23,12 @@ public class Video {
         _movieName = videoName;
     }
 
+    public Video(String videoName, Integer yearReleased, UUID id){
+        _movieName = videoName;
+        _yearReleased = yearReleased;
+        _videoId = id;
+    }
+
     public UUID getVideoId() {
         return _videoId;
     }
