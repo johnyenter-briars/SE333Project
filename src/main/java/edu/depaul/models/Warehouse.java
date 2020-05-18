@@ -88,7 +88,7 @@ public class Warehouse implements DVDOwner, Iterable<Video>, Collection<Video>{
     @Override
     public boolean add(Video video) {
         if(video == null)
-            return false;
+            throw new IllegalArgumentException("Video parameter must not be null!");
         _inventory.add(video);
         return true;
     }
