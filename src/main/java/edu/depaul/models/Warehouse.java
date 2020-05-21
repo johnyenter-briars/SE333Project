@@ -5,35 +5,46 @@ import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.CsvToBean;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.Consumer;
 
 public class Warehouse implements DVDOwner, Iterable<Video>, Collection<Video>{
 
-    private List<Video> _inventory;
+    private List<Video> _inventory = new LinkedList<>();
 
-    public Warehouse() throws IOException {
-        loadVideos();
+    private List<String> _validVideoSources =
+            new LinkedList<String>(Arrays.asList("files/Videos.csv", "files/MoreVideos.csv"));
+
+    public Warehouse(){
+        loadVideos(_validVideoSources.get(0));
     }
 
-    public void loadVideos() throws IOException {
-        File file = new File("files/Videos.csv");
-        FileReader fileReader = new FileReader(file);
+    public void loadVideos(String path) {
+        if(!_validVideoSources.contains(path))
+            throw new IllegalArgumentException("Trying to obtain videos from an incorrect path!");
 
-        CsvToBean<Video> csv = new CsvToBean<>();
+        try{
+            File file = new File(path);
+            FileReader fileReader = new FileReader(file);
 
-        CSVReader csvReader = new CSVReader(fileReader);
+            CsvToBean<Video> csv = new CsvToBean<>();
 
-        csv.setCsvReader(csvReader);
-        csv.setMappingStrategy(setColumnMapping());
+            CSVReader csvReader = new CSVReader(fileReader);
 
-        List<Video> initialInventory = csv.parse();
+            csv.setCsvReader(csvReader);
+            csv.setMappingStrategy(setColumnMapping());
 
-        initialInventory.forEach((video) ->{
-            video.setVideoId(UUID.randomUUID());
-        });
+            List<Video> initialInventory = csv.parse();
 
-        _inventory = initialInventory;
+            initialInventory.forEach((video) ->{
+                video.setVideoId(UUID.randomUUID());
+            });
+
+            _inventory.addAll(initialInventory);
+        }catch (IOException e){
+            System.out.println("Error while loading files!" + e);
+        }
     }
 
     private static ColumnPositionMappingStrategy<Video> setColumnMapping()
@@ -49,11 +60,14 @@ public class Warehouse implements DVDOwner, Iterable<Video>, Collection<Video>{
         return _inventory.stream().filter(v -> v.getMovieName().contains(name)).findAny().orElse(null);
     }
 
+    public void addMoreVideosToInventory() {
+        loadVideos(_validVideoSources.get(1));
+    }
+
     @Override
     public int size() {
         return _inventory.size();
     }
-
 
     @Override
     public boolean isEmpty() {
@@ -67,16 +81,14 @@ public class Warehouse implements DVDOwner, Iterable<Video>, Collection<Video>{
         return _inventory.contains(o);
     }
 
-    // TODO: 4/24/20
     @Override
     public Iterator<Video> iterator() {
         return _inventory.iterator();
     }
 
-    // TODO: 4/24/20
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        return _inventory.toArray();
     }
 
     // TODO: 4/24/20
@@ -101,35 +113,28 @@ public class Warehouse implements DVDOwner, Iterable<Video>, Collection<Video>{
         return true;
     }
 
-    // TODO: 4/24/20
     @Override
     public boolean containsAll(Collection<?> collection) {
-        return false;
+        return _inventory.containsAll(collection);
     }
 
-    // TODO: 4/24/20
     @Override
     public boolean addAll(Collection<? extends Video> collection) {
-        return false;
+        return _inventory.addAll(collection);
     }
 
-    // TODO: 4/24/20
     @Override
     public boolean removeAll(Collection<?> collection) {
-        return false;
+        return _inventory.removeAll(collection);
     }
 
-    // TODO: 4/24/20
     @Override
     public boolean retainAll(Collection<?> collection) {
-        return false;
+        return _inventory.retainAll(collection);
     }
 
-    // TODO: 4/24/20
     @Override
-    public void clear() {
-
-    }
+    public void clear() { _inventory.clear(); }
 
     @Override
     public void forEach(Consumer<? super Video> action) {
