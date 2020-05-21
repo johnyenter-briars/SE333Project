@@ -55,8 +55,30 @@ public class DennysDVDs {
         return _warehouse.stream().anyMatch(v -> v.getMovieName().contains(videoName));
     }
 
+    public void addMoreVideosToStock(){
+        _warehouse.addMoreVideosToInventory();
+    }
+
     public List<VideoExchange> getLedger(){
         return _ledger;
+    }
+
+    public boolean validateLedger(){
+        for (VideoExchange exchange: _ledger) {
+            if(exchange.get_comingFrom() == _warehouse){
+                //We are giving out a DVD. Either the DVD is not in the inventory, or we have an exchange of it coming back to us
+//               TODO: Add a check to see if we have a record of the video coming back to us
+                if(_ledger.stream().anyMatch((e) -> e.equals(exchange)))
+                    continue;
+
+                if(_warehouse.contains(exchange.get_video()))
+                    return false;
+
+
+            }
+        }
+
+        return true;
     }
 
 

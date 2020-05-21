@@ -163,4 +163,32 @@ public class DennysDVDsTest {
         });
     }
 
+    @Test
+    void Test_AddMoreVideos_Warehouse(){
+        //Arrange
+        Warehouse warehouse = new Warehouse();
+        assertEquals(3, warehouse.size());
+
+        //Act
+        warehouse.addMoreVideosToInventory();
+
+        //Assert
+        assertTrue(warehouse.size() > 3);
+
+    }
+
+    @Test
+    void Test_ValidateLedger_DennysDVDs(){
+        //Arrange
+        DennysDVDs dennysDVDs = new DennysDVDs(new Warehouse());
+        Customer customer = new Customer();
+
+        //Act
+        dennysDVDs.checkoutVideo(customer, "Star Wars");
+        dennysDVDs.checkinVideo(customer, customer.getCurrentlyRented().get(0));
+
+        //Assert
+        assertTrue(dennysDVDs.validateLedger());
+    }
+
 }
