@@ -145,7 +145,7 @@ public class Warehouse implements DVDOwner, Iterable<Video>, Collection<Video>{
     }
 
     @Override
-    public void printCurrentlyOwnedVideos() {
-        _inventory.forEach(System.out::println);
+    public List<Video> getCurrentlyOwnedVideos() {
+        return _inventory;
     }
 }

@@ -21,25 +21,13 @@ public class VideoExchange {
         return _goingTo;
     }
 
-    public void set_goingTo(DVDOwner _goingTo) {
-        this._goingTo = _goingTo;
-    }
-
     public DVDOwner get_comingFrom() {
         return _comingFrom;
     }
 
-    public void set_comingFrom(DVDOwner _comingFrom) {
-        this._comingFrom = _comingFrom;
-    }
-
     public Video get_video(){ return _video; }
 
-    @Override
-    public boolean equals(Object obj) {
-        if(!(obj instanceof VideoExchange))
-            throw new IllegalArgumentException("You can only compare video exchanes with each other!");
-        VideoExchange other = (VideoExchange) obj;
-        return _goingTo == other.get_goingTo() && _comingFrom == other.get_comingFrom() && _video == other.get_video();
+    public boolean matchingExchange(VideoExchange otherExchange){
+        return _goingTo == otherExchange.get_comingFrom() && _comingFrom == otherExchange.get_goingTo();
     }
 }

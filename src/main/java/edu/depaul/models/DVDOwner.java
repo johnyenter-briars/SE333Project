@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface DVDOwner {
 
-    void printCurrentlyOwnedVideos();
+    List<Video> getCurrentlyOwnedVideos();
 }

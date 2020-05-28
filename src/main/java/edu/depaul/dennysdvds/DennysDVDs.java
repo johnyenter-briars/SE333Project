@@ -20,10 +20,6 @@ public class DennysDVDs {
         _ledger = new LinkedList<>();
     }
 
-    public void printDVDs(){
-        _warehouse.printCurrentlyOwnedVideos();
-    }
-
     public Response checkoutVideo(Customer customer, String name){
         Video targetVideo = _warehouse.getVideoByNameAprox(name);
 
@@ -40,7 +36,7 @@ public class DennysDVDs {
 
     public Response checkinVideo(Customer customer, Video video){
 
-        VideoExchange videoExchange = new VideoExchange(customer, _warehouse, video);
+        VideoExchange videoExchange = new VideoExchange(_warehouse, customer, video);
 
         _ledger.add(videoExchange);
 
@@ -65,12 +61,14 @@ public class DennysDVDs {
 
     public boolean validateLedger(){
         for (VideoExchange exchange: _ledger) {
+
+            //We are giving out a DVD. Either the DVD is not in the inventory, or we have an exchange of it coming back to us
             if(exchange.get_comingFrom() == _warehouse){
-                //We are giving out a DVD. Either the DVD is not in the inventory, or we have an exchange of it coming back to us
-//               TODO: Add a check to see if we have a record of the video coming back to us
-                if(_ledger.stream().anyMatch((e) -> e.equals(exchange)))
+                //Make sure we have a match for that exchange
+                if(_ledger.stream().anyMatch((e) -> e.matchingExchange(exchange)))
                     continue;
 
+                //We never properly gave it away
                 if(_warehouse.contains(exchange.get_video()))
                     return false;
 
