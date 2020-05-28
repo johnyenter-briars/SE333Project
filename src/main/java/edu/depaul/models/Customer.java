@@ -20,32 +20,14 @@ public class Customer implements DVDOwner{
         _currentlyRented = new LinkedList<>();
     }
 
-    public UUID get_customerId() {
-        return _customerId;
-    }
-
-    public void set_customerId(UUID _customerId) {
-        this._customerId = _customerId;
-    }
-
-    public List<Video> getCurrentlyRented() {
-        return _currentlyRented;
-    }
-
     public void addToCurrentlyRented(Video video){ _currentlyRented.add(video); }
 
     public void removeFromCurrentlyRented(Video video){ _currentlyRented.remove(video); }
 
-    public String toString(){
-        return _firstName + " " + _lastName + " " + _customerId;
-    }
-
     public boolean currentlyHasVideo(String videoName){
-        return getCurrentlyRented().stream().anyMatch(v -> v.getMovieName().contains(videoName));
+        return getCurrentlyOwnedVideos().stream().anyMatch(v -> v.getMovieName().contains(videoName));
     }
 
     @Override
-    public void printCurrentlyOwnedVideos() {
-        _currentlyRented.forEach(System.out::println);
-    }
+    public List<Video> getCurrentlyOwnedVideos() { return _currentlyRented; }
 }

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.stubbing.OngoingStubbing;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,7 +44,7 @@ public class DennysDVDsTest {
 
         //Assert
         assertTrue(customer1.currentlyHasVideo("Star Wars"));
-        dennysDVDs.checkinVideo(customer1, customer1.getCurrentlyRented().get(0));
+        dennysDVDs.checkinVideo(customer1, customer1.getCurrentlyOwnedVideos().get(0));
         assertFalse(customer1.currentlyHasVideo("Star Wars"));
     }
 
@@ -155,10 +156,11 @@ public class DennysDVDsTest {
         //Act
         //Assert
         assertEquals(String.format("Star Wars 1977 %s", id.toString()), video.toString());
+        assertEquals(id, video.getVideoId());
     }
 
     @Test
-    void Test_VideoExchange_TypeMismatch(){
+    void Test_TypeMismatch_VideoExchange(){
         //Arrange
         Video video = new Video("Star Wars", 1977, UUID.randomUUID());
         //Act
@@ -166,6 +168,38 @@ public class DennysDVDsTest {
         assertThrows(IllegalArgumentException.class, () ->{
             VideoExchange videoExchange = new VideoExchange(new Customer(), new Customer(), video);
         });
+    }
+
+    @Test
+    void Test_Matching_VideoExchange(){
+        //Arrange
+        Customer customer = mock(Customer.class);
+        Warehouse warehouse = mock(Warehouse.class);
+        VideoExchange videoExchange1 =
+                new VideoExchange(customer, warehouse, new Video("Star Wars", 1977, UUID.randomUUID()));
+        VideoExchange videoExchange2 =
+                new VideoExchange(warehouse, customer, new Video("Star Wars", 1977, UUID.randomUUID()));
+
+        //Act
+        //Assert
+        assertTrue(videoExchange1.matchingExchange(videoExchange2));
+        assertTrue(videoExchange2.matchingExchange(videoExchange1));
+    }
+
+    @Test
+    void Test_NotMatching_VideoExchange(){
+        //Arrange
+        Customer customer = mock(Customer.class);
+        Warehouse warehouse = mock(Warehouse.class);
+        VideoExchange videoExchange1 =
+                new VideoExchange(customer, warehouse, new Video("Star Wars", 1977, UUID.randomUUID()));
+        VideoExchange videoExchange2 =
+                new VideoExchange(customer, warehouse, new Video("Star Wars", 1977, UUID.randomUUID()));
+
+        //Act
+        //Assert
+        assertFalse(videoExchange1.matchingExchange(videoExchange2));
+        assertFalse(videoExchange2.matchingExchange(videoExchange1));
     }
 
     @Test
@@ -190,9 +224,38 @@ public class DennysDVDsTest {
 
         //Act
         dennysDVDs.checkoutVideo(customer, "Star Wars");
-        dennysDVDs.checkinVideo(customer, customer.getCurrentlyRented().get(0));
+        dennysDVDs.checkinVideo(customer, customer.getCurrentlyOwnedVideos().get(0));
 
         //Assert
         assertTrue(dennysDVDs.validateLedger());
+    }
+
+    @Test
+    void Test_ValidateLedger_Invalid_DennysDVDs(){
+        //Arrange
+        Warehouse warehouse = new Warehouse();
+        DennysDVDs dennysDVDs = new DennysDVDs(warehouse);
+        Customer customer = new Customer();
+        Video targetVideo = warehouse.stream().findFirst().get();
+
+        //Act
+        dennysDVDs.checkoutVideo(customer, "Titanic");
+        warehouse.add(targetVideo);
+
+        //Assert
+        assertFalse(dennysDVDs.validateLedger());
+    }
+
+    @Test
+    void Test_AddMoreVideos_DennysDVDs_Warehouse(){
+        //Arrange
+        Warehouse warehouse = new Warehouse();
+        DennysDVDs dennysDVDs = new DennysDVDs(warehouse);
+
+        //Act
+        dennysDVDs.addMoreVideosToStock();
+
+        //Assert
+        assertEquals(8, warehouse.size());
     }
 }
