@@ -101,16 +101,14 @@ public class Warehouse implements DVDOwner, Iterable<Video>, Collection<Video>{
     public boolean add(Video video) {
         if(video == null)
             throw new IllegalArgumentException("Video parameter must not be null!");
-        _inventory.add(video);
-        return true;
+        return _inventory.add(video);
     }
 
     @Override
     public boolean remove(Object o) {
         if(!(o instanceof Video))
             throw new IllegalArgumentException("Must remove a Video object from the warehouse!");
-        _inventory.remove(o);
-        return true;
+        return _inventory.remove(o);
     }
 
     @Override

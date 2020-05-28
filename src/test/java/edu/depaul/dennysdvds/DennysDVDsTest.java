@@ -11,12 +11,12 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 public class DennysDVDsTest {
 
+    //Customer under test
     @Test
     void Test_Checkout_Customer() throws IOException {
         //Arrange
@@ -31,6 +31,7 @@ public class DennysDVDsTest {
         assertFalse(dennysDVDs.currentlyHasVideo("Star Wars"));
     }
 
+    //Customer under test
     @Test
     void Test_CheckIn_Customer() throws IOException {
         //Arrange
@@ -46,6 +47,7 @@ public class DennysDVDsTest {
         assertFalse(customer1.currentlyHasVideo("Star Wars"));
     }
 
+    //DennysDVDs under test
     @Test
     void Test_Checkout_DennysDVDs() throws IOException {
         //Arrange
@@ -57,8 +59,10 @@ public class DennysDVDsTest {
 
         //Assert
         assertFalse(dennysDVDs.currentlyHasVideo("Star Wars"));
+        verify(mockCustomer, times(1)).addToCurrentlyRented(any(Video.class));
     }
 
+    //DennysDVDs under test
     @Test
     void Test_CheckIn_DennysDVDs() throws IOException {
         //Arrange
@@ -72,6 +76,7 @@ public class DennysDVDsTest {
         //Assert
         assertTrue(dennysDVDs.currentlyHasVideo("Star Wars"));
         assertEquals(2, dennysDVDs.getLedger().size());
+        verify(mockCustomer, times(1)).addToCurrentlyRented(any(Video.class));
     }
 
     @Test
@@ -190,5 +195,4 @@ public class DennysDVDsTest {
         //Assert
         assertTrue(dennysDVDs.validateLedger());
     }
-
 }
