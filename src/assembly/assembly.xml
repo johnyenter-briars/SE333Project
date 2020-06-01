@@ -13,8 +13,10 @@
                 <include>src/assembly/*.*</include>
                 <include>files/*.csv</include>
                 <include>lib/*.jar</include>
-                <include>target/surefire-reports/*.txt</include>
-                <include>target/site/jacoco/**/*</include>
+<!--                <include>target/surefire-reports/*.txt</include>-->
+<!--                <include>target/site/jacoco/**/*</include>-->
+<!--                <include>target/spotbugs.xml</include>-->
+                <include>target/*</include>
                 <include>pom.xml</include>
                 <include>README.md</include>
             </includes>
