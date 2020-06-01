@@ -3,7 +3,6 @@ package edu.depaul.dennysdvds;
 import edu.depaul.models.*;
 
 import org.junit.jupiter.api.Test;
-//import org.junit.Test;
 import org.mockito.stubbing.OngoingStubbing;
 
 import java.io.IOException;
@@ -53,13 +52,12 @@ public class DennysDVDsTest {
         verify(mockCustomer, times(1)).addToCurrentlyRented(any(Video.class));
     }
 
-    //Functional Test
-//    @Test(expected=IllegalArgumentException.class)
     @Test
     public void Test_ErrorHandling_DennysDVDs(){
         //Arrange
         //Act
         //Assert
+
         assertThrows(IllegalArgumentException.class, ()->{
             DennysDVDs dennysDVDs = new DennysDVDs(null);
         });
