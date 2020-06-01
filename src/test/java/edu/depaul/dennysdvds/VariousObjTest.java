@@ -21,8 +21,11 @@ public class VariousObjTest {
         Video video = new Video("Star Wars", 1977, id);
         //Act
         //Assert
-        assertEquals(String.format("Star Wars 1977 %s", id.toString()), video.toString());
-        assertEquals(id, video.getVideoId());
+        assertAll("Video string is properly formatted", ()->{
+            assertEquals(String.format("Star Wars 1977 %s", id.toString()), video.toString());
+        }, ()->{
+            assertEquals(id, video.getVideoId());
+        });
     }
 
     @Test
@@ -48,8 +51,11 @@ public class VariousObjTest {
 
         //Act
         //Assert
-        assertTrue(videoExchange1.matchingExchange(videoExchange2));
-        assertTrue(videoExchange2.matchingExchange(videoExchange1));
+        assertAll("Video exchanges are matching", ()->{
+            assertTrue(videoExchange1.matchingExchange(videoExchange2));
+        }, ()->{
+            assertTrue(videoExchange2.matchingExchange(videoExchange1));
+        });
     }
 
     @Test
@@ -64,7 +70,10 @@ public class VariousObjTest {
 
         //Act
         //Assert
-        assertFalse(videoExchange1.matchingExchange(videoExchange2));
-        assertFalse(videoExchange2.matchingExchange(videoExchange1));
+        assertAll("Video exchanges are not matching", ()->{
+            assertFalse(videoExchange1.matchingExchange(videoExchange2));
+        }, ()->{
+            assertFalse(videoExchange2.matchingExchange(videoExchange1));
+        });
     }
 }
