@@ -1,7 +1,7 @@
 package edu.depaul.dennysdvds;
 
 import edu.depaul.models.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
@@ -25,14 +25,15 @@ public class VariousObjTest {
         });
     }
 
-    //Functional Test
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void Test_TypeMismatch_VideoExchange(){
         //Arrange
         Video video = new Video("Star Wars", 1977, UUID.randomUUID());
         //Act
         //Assert
-        VideoExchange videoExchange = new VideoExchange(new Customer(), new Customer(), video);
+        assertThrows(IllegalArgumentException.class, ()->{
+            VideoExchange videoExchange = new VideoExchange(new Customer(), new Customer(), video);
+        });
     }
 
     @Test

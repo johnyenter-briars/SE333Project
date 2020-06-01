@@ -2,7 +2,7 @@ package edu.depaul.dennysdvds;
 
 import edu.depaul.models.Customer;
 import edu.depaul.models.Warehouse;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 

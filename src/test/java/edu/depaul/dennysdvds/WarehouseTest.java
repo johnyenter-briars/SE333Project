@@ -4,7 +4,7 @@ import edu.depaul.models.Response;
 import edu.depaul.models.ResponseStatus;
 import edu.depaul.models.Video;
 import edu.depaul.models.Warehouse;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
@@ -12,34 +12,40 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class WarehouseTest {
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void Test_ErrorHandling_RemoveVideo_Warehouse() throws IOException {
         //Arrange
         Warehouse warehouse = new Warehouse();
 
         //Act
         //Assert
-        warehouse.remove("Not a Video Object!");
+        assertThrows(IllegalArgumentException.class, ()->{
+            warehouse.remove("Not a Video Object!");
+        });
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void Test_ErrorHandling_AddVideo_Warehouse() throws IOException {
         //Arrange
         Warehouse warehouse = new Warehouse();
 
         //Act
         //Assert
-        warehouse.add(null);
+        assertThrows(IllegalArgumentException.class, ()->{
+            warehouse.add(null);
+        });
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void Test_ErrorHandling_ContainsVideo_Warehouse() throws IOException {
         //Arrange
         Warehouse warehouse = new Warehouse();
 
         //Act
         //Assert
-        warehouse.contains("Not a video object!");
+        assertThrows(IllegalArgumentException.class, ()->{
+            warehouse.contains("Not a video object!");
+        });
     }
 
     @Test
