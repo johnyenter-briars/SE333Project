@@ -1,10 +1,7 @@
 package edu.depaul.dennysdvds;
 
-import edu.depaul.models.Customer;
-import edu.depaul.models.Video;
-import edu.depaul.models.VideoExchange;
-import edu.depaul.models.Warehouse;
-import org.junit.jupiter.api.Test;
+import edu.depaul.models.*;
+import org.junit.Test;
 
 import java.util.UUID;
 
@@ -15,7 +12,7 @@ import static org.mockito.Mockito.mock;
 public class VariousObjTest {
 
     @Test
-    void Test_VideoString(){
+    public void Test_VideoString(){
         //Arrange
         UUID id = UUID.randomUUID();
         Video video = new Video("Star Wars", 1977, id);
@@ -28,19 +25,18 @@ public class VariousObjTest {
         });
     }
 
-    @Test
-    void Test_TypeMismatch_VideoExchange(){
+    //Functional Test
+    @Test(expected=IllegalArgumentException.class)
+    public void Test_TypeMismatch_VideoExchange(){
         //Arrange
         Video video = new Video("Star Wars", 1977, UUID.randomUUID());
         //Act
         //Assert
-        assertThrows(IllegalArgumentException.class, () ->{
-            VideoExchange videoExchange = new VideoExchange(new Customer(), new Customer(), video);
-        });
+        VideoExchange videoExchange = new VideoExchange(new Customer(), new Customer(), video);
     }
 
     @Test
-    void Test_Matching_VideoExchange(){
+    public void Test_Matching_VideoExchange(){
         //Arrange
         Customer customer = mock(Customer.class);
         Warehouse warehouse = mock(Warehouse.class);
@@ -59,7 +55,7 @@ public class VariousObjTest {
     }
 
     @Test
-    void Test_NotMatching_VideoExchange(){
+    public void Test_NotMatching_VideoExchange(){
         //Arrange
         Customer customer = mock(Customer.class);
         Warehouse warehouse = mock(Warehouse.class);
@@ -75,5 +71,15 @@ public class VariousObjTest {
         }, ()->{
             assertFalse(videoExchange2.matchingExchange(videoExchange1));
         });
+    }
+
+    @Test
+    public void Test_GetResponseStatus(){
+        //Arrange
+        Response response = new Response(ResponseStatus.OK);
+
+        //Act
+        //Assert
+        assertEquals(ResponseStatus.OK, response.getStatus());
     }
 }

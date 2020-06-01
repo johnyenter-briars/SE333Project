@@ -2,7 +2,8 @@ package edu.depaul.dennysdvds;
 
 import edu.depaul.models.*;
 
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.mockito.stubbing.OngoingStubbing;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class DennysDVDsTest {
 
     //DennysDVDs under test
     @Test
-    void Test_Checkout_DennysDVDs() throws IOException {
+    public void Test_Checkout_DennysDVDs() throws IOException {
         //Arrange
         Customer mockCustomer = mock(Customer.class);
         DennysDVDs dennysDVDs = new DennysDVDs(new Warehouse());
@@ -34,7 +35,7 @@ public class DennysDVDsTest {
 
     //DennysDVDs under test
     @Test
-    void Test_CheckIn_DennysDVDs() throws IOException {
+    public void Test_CheckIn_DennysDVDs() throws IOException {
         //Arrange
         Customer mockCustomer = mock(Customer.class);
         DennysDVDs dennysDVDs = new DennysDVDs(new Warehouse());
@@ -52,18 +53,17 @@ public class DennysDVDsTest {
         verify(mockCustomer, times(1)).addToCurrentlyRented(any(Video.class));
     }
 
-    @Test
-    void Test_ErrorHandling_DennysDVDs(){
+    //Functional Test
+    @Test(expected=IllegalArgumentException.class)
+    public void Test_ErrorHandling_DennysDVDs(){
         //Arrange
         //Act
         //Assert
-        assertThrows(IllegalArgumentException.class, () ->{
-            DennysDVDs dennysDVDs = new DennysDVDs(null);
-        });
+        DennysDVDs dennysDVDs = new DennysDVDs(null);
     }
 
     @Test
-    void Test_ValidateLedger_DennysDVDs(){
+    public void Test_ValidateLedger_DennysDVDs(){
         //Arrange
         DennysDVDs dennysDVDs = new DennysDVDs(new Warehouse());
         Customer customer = new Customer();
@@ -77,7 +77,7 @@ public class DennysDVDsTest {
     }
 
     @Test
-    void Test_ValidateLedger_Invalid_DennysDVDs(){
+    public void Test_ValidateLedger_Invalid_DennysDVDs(){
         //Arrange
         Warehouse warehouse = new Warehouse();
         DennysDVDs dennysDVDs = new DennysDVDs(warehouse);
