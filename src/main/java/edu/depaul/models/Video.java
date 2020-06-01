@@ -29,6 +29,13 @@ public class Video {
         _videoId = id;
     }
 
+    public Video(String videoName, Integer yearReleased, Integer runTimeMins, UUID id){
+        _movieName = videoName;
+        _yearReleased = yearReleased;
+        _videoId = id;
+        _numberOfMinutes = runTimeMins;
+    }
+
     public UUID getVideoId() {
         return _videoId;
     }
