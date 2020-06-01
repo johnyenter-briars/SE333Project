@@ -5,6 +5,7 @@ import edu.depaul.models.*;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 public class DennysDVDs {
 
@@ -71,13 +72,12 @@ public class DennysDVDs {
                 //We never properly gave it away
                 if(_warehouse.contains(exchange.get_video()))
                     return false;
-
-
             }
         }
-
         return true;
     }
 
-
+    public boolean addSingleVideo(Video video){
+        return _warehouse.add(video);
+    }
 }
